@@ -23,16 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $execute->bindParam(':title', $title);
         $execute->execute();
     } elseif ($action === 'delete') {
-        $taskId = $_POST['id'];
-        $sql = "DELETE FROM todo WHERE id = :taskId";
+        $todoId = $_POST['id'];
+        $sql = "DELETE FROM todo WHERE id = :todoId";
         $execute = $pdo->prepare($sql);
-        $execute->bindParam(':taskId', $taskId);
+        $execute->bindParam(':todoId', $todoId);
         $execute->execute();
     } elseif ($action === 'toggle') {
-        $taskId = $_POST['id'];
-        $sql = "UPDATE todo SET done = 1 - done WHERE id = :taskId";
+        $todoId = $_POST['id'];
+        $sql = "UPDATE todo SET done = 1 - done WHERE id = :todoId";
         $execute = $pdo->prepare($sql);
-        $execute->bindParam(':taskId', $taskId);
+        $execute->bindParam(':todoId', $todoId);
         $execute->execute();
     }
 }
