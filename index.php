@@ -11,40 +11,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     // Connect to the database TodoList :
-    $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME;
-    $pdo = new PDO($dsn, DB_USER, DB_PASS);
+    $con = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME;
+    $pdo = new PDO($con, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Test Submit :
     if ($action === 'new') {
         $title = $_POST['title'];
         $sql = "INSERT INTO todo (title) VALUES (:title)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':title', $title);
-        $stmt->execute();
+        $execute = $pdo->prepare($sql);
+        $execute->bindParam(':title', $title);
+        $execute->execute();
     } elseif ($action === 'delete') {
         $taskId = $_POST['id'];
         $sql = "DELETE FROM todo WHERE id = :taskId";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':taskId', $taskId);
-        $stmt->execute();
+        $execute = $pdo->prepare($sql);
+        $execute->bindParam(':taskId', $taskId);
+        $execute->execute();
     } elseif ($action === 'toggle') {
         $taskId = $_POST['id'];
         $sql = "UPDATE todo SET done = 1 - done WHERE id = :taskId";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':taskId', $taskId);
-        $stmt->execute();
+        $execute = $pdo->prepare($sql);
+        $execute->bindParam(':taskId', $taskId);
+        $execute->execute();
     }
 }
 
 // Front-End :
-$dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME;
-$pdo = new PDO($dsn, DB_USER, DB_PASS);
+$con = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME;
+$pdo = new PDO($con, DB_USER, DB_PASS);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $sql = "SELECT * FROM todo ORDER BY created_at DESC";
-$stmt = $pdo->query($sql);
-$taches = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$execute = $pdo->query($sql);
+$taches = $execute->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
